@@ -81,6 +81,32 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      leading: Checkbox(
+                          value: tasks[index]["isCompleted"],
+                          onChanged: (value) => taskComplete(index)),
+                      title: Text(
+                        tasks[index]["Name"],
+                        style: TextStyle(
+                          decoration: tasks[index]["isCompleted"]
+                              ? TextDecoration.lineThrough
+                              : null,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () => removeTask(index),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),
