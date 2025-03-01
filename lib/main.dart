@@ -32,26 +32,58 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController controlTasks = TextEditingController();
-  List<Map<String, dynamic>> tasks = []; 
+  List<Map<String, dynamic>> tasks = [];
 
-  void addTask() { 
+  void addTask() {
     if (controlTasks.text.isNotEmpty) {
       setState(() {
-        tasks.add({"Name": controlTasks.text, "isCompleted":false});
-        controlTasks.clear(); 
+        tasks.add({"Name": controlTasks.text, "isCompleted": false});
+        controlTasks.clear();
       });
     }
   }
 
-  void taskComplete(int index) { 
+  void taskComplete(int index) {
     setState(() {
       tasks[index]["isCompleted"] = !tasks[index]["isCompleted"];
     });
   }
 
-  void removeTask(int index) { 
+  void removeTask(int index) {
     setState(() {
       tasks.removeAt(index);
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: controlTasks,
+                    decoration:
+                        const InputDecoration(hintText: 'Enter Task Name'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                    onPressed: addTask, child: const Text('Add Task')),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
   }
 }
